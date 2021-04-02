@@ -1,0 +1,11 @@
+- hosts: "{{ target_hosts }}"
+
+  tasks:
+  - name:
+    command:
+      cmd: ls "{{ dir }}"
+    register: up
+
+  - debug:
+      var: up.stdout
+

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <pre id="output"></pre>
+    <button id="send">run</button>
+    <button id="cancel">cancel</button>
+    <input name="what" type="text" id="uuid"/>
+    <script>
+        uuid = null
+        document.getElementById("send").addEventListener("click", function() {
+                    uuid = document.getElementById('uuid').value 
+                    url2 = "/play?uuid=" + uuid
+                    const evtSource = new EventSource(url2);
+                    evtSource.onmessage = function(event) {
+                        d = JSON.parse(event.data);
+                        if ('code' in d) {
+                            evtSource.close();
+                        }else{
+                            document.getElementById('output').innerHTML = document.getElementById('output').innerHTML + d.data
+                        }
+                    }
+        });
+    </script>
+
+</body>
+</html>
+

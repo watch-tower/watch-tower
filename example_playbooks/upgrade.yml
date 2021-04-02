@@ -1,0 +1,23 @@
+---
+
+- hosts: all
+  remote_user: portaone
+  become: yes
+  tasks:
+    - name: Update packages list
+      apt: update_cache=yes
+      when: ansible_os_family == 'Debian'
+
+
+    - name: Upgrade packages
+      apt: upgrade=safe
+      when: ansible_os_family == 'Debian'
+
+
+    - name: Remove useless packages from the cache
+      apt:
+        autoclean: yes
+
+    - name: Remove dependencies that are no longer required
+      apt:
+        autoremove: yes

@@ -1,0 +1,45 @@
+1. Search query should look like /resource?query={"inventory_id" : [1,2,3,4,5], "name" : "mena"}
+   The basic idea is to pass only one uri param (query) and assign JSON to it
+   It is easy to validate to back-end side
+
+2. /host?inventory_id=3
+   request.args puts 3 as string but not number into dict. So, it will cause that instance is not valid.
+   I need to convert all convertable strings to numbers ???
+   but name of inventory is a string but string can have only numbers....
+
+3. Given a network 192.168.1.0/24 (HOT)
+   I want to add all hosts from this network to inventory lets say audience 303
+   Info I need:
+    1. IP address
+    2. status for service ports (ssh and others)
+    3. should show if IP is ansible-server IP
+   Note. It can be implemented via simple playbooks...
+
+   Solved:
+     1. nmap scans network and opens ports and writes this information into xml format
+     2. I just parse the xml file and get needed data such as ip, hostname and port for ssh service
+     3. I return it to a client
+
+
+4. Add endpoint to execute playbooks on localhost
+
+5. Create playbook environment constructor (HOT)
+Let's say I have a general playbook to install, delete programs
+
+tasks:
+ - name: Install or remove package
+   apt:
+    name: {{ package }}
+    state: {{ state }}
+
+I want to have list of possible values for state and package variables.
+I just choose variable 'state' and put two values into possible values (absent, present)
+Nextly, when I want to run the playbook, I will see that state can be absent or present and I choose value from LIST but not typing my self.
+The same with package. I create a list of often used packages as it is bored to remember all them. 
+
+extra vars to be passed as JSON request to run the playbook: 
+
+extra_vars : {
+    name : ['cowsay', 'python3', 'one shit', 'another shit'], #install a few programs
+    state : 'present'
+}

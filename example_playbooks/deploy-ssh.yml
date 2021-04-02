@@ -1,0 +1,10 @@
+---
+ - hosts: all
+   remote_user: student
+ 
+   tasks:
+ 
+ 
+   - name: Deploy SSH Key
+     authorized_key: user=student
+                     key="{{ lookup('file', '/home/alf/.ssh/porta73student.pub') }}"

@@ -1,0 +1,14 @@
+---
+ - hosts: all
+   remote_user: portaone
+   gather_facts: no  
+   tasks:
+ 
+ 
+   - name: Run some command
+     command: /sbin/shutdown -h now
+     async: 0
+     poll: 0
+     ignore_errors: true
+     become: yes
+     

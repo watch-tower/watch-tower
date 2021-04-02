@@ -1,0 +1,12 @@
+---
+ - hosts: all
+   remote_user: portaone
+   become: yes
+   gather_facts: no
+   tasks:
+ 
+ 
+   - lineinfile:
+       path: /etc/sudoers
+       line: 'student ALL=(ALL) NOPASSWD: /usr/bin/wireshark, /usr/sbin/tcpdump, /bin/ip'
+       validate: '/usr/sbin/visudo -cf %s'
